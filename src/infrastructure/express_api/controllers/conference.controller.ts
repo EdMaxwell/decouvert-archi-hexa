@@ -25,7 +25,7 @@ export const createConference: RequestHandler = async (req, res, next) => {
 
 
         const result = await useCase.execute({
-            user: new User({id: 'john-doe'}),
+            user: req.user as User,
             title: input.title,
             startDate: new Date(input.startDate),
             endDate: new Date(input.endDate),

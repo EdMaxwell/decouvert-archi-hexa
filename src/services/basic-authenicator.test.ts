@@ -40,7 +40,7 @@ describe('Authenticator', () => {
         })
     })
 
-    describe('Scenario: email is not valid', () => {
+    describe('Scenario: password is not valid', () => {
         it('should throw an error', async () => {
 
             const payload = Buffer.from('johndoe@gmail.com:aterty').toString('base64')
