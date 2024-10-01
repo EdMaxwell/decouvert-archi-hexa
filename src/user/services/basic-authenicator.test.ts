@@ -1,4 +1,4 @@
-import {BasicAuthenticator} from "../services/basic-authenticator";
+import {BasicAuthenticator} from "./basic-authenticator";
 import {InMemoryUserRepository} from "../adapters/in-memory-user-repository";
 import {User} from "../entities/user.entity";
 

@@ -1,9 +1,9 @@
-import {OrganizeConference} from "../usecases/organize-conference";
+import {OrganizeConference} from "./organize-conference";
 import {InMemoryConferenceRepository} from "../adapters/in-memory-conference-repository";
-import {FixedIdGenerator} from "../adapters/fixed-id-generator";
+import {FixedIdGenerator} from "../../core/adapters/fixed-id-generator";
 import Conference from "../entities/conference.entity";
-import {FixedDateGenerator} from "../adapters/fixed-date-generator";
-import {User} from "../entities/user.entity";
+import {FixedDateGenerator} from "../../core/adapters/fixed-date-generator";
+import {User} from "../../user/entities/user.entity";
 
 
 describe('Feature: Organize a conference', () => {
@@ -18,7 +18,10 @@ describe('Feature: Organize a conference', () => {
         });
     }
 
-    let johnDoe = new User({id: 'john-doe'});
+    let johnDoe = new User({
+        id: 'john-doe',
+        emailAdress: 'johndoe@gmail.com', password: 'azerty'
+    });
     let repository: InMemoryConferenceRepository;
     let fixedIdGenerator: FixedIdGenerator;
     let useCase: OrganizeConference;
