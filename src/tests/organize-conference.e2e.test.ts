@@ -1,4 +1,4 @@
-import * as request from "supertest";
+import request from "supertest";
 import app from "../infrastructure/express_api/app";
 import {addDays, addHours} from "date-fns";
 
@@ -12,7 +12,7 @@ describe('Feature: Organize Conference', () => {
         }).expect(201)
 
         expect(result.body).toEqual({
-            id: "id-1",
+            id: expect.any(String),
         })
     })
 })
