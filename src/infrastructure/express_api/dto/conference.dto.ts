@@ -1,4 +1,4 @@
-import {IsDate, IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {IsDateString, IsNotEmpty, IsNumber, IsString} from "class-validator";
 
 export class CreateConferenceInput {
 
@@ -6,16 +6,16 @@ export class CreateConferenceInput {
     @IsNotEmpty()
     title: string;
 
-    @IsDate()
+    @IsDateString()
     @IsNotEmpty()
     startDate: Date;
 
-    @IsDate()
+    @IsDateString()
     @IsNotEmpty()
     endDate: Date;
 
     @IsNumber()
     @IsNotEmpty()
     seats: number;
-    
+
 }

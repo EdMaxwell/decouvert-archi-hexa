@@ -1,5 +1,4 @@
 import expressApp from './app';
-import * as process from "node:process";
 
 const PORT = process.env.PORT || 3000;
 

@@ -32,7 +32,7 @@ export const createConference: RequestHandler = async (req, res, next) => {
             seats: input.seats
         });
 
-        res.status(201).json(result);
+        res.jsonSuccess({id: result.id}, 201);
     } catch (err) {
         next(err);
     }
