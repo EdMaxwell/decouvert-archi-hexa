@@ -4,6 +4,8 @@ import {InMemoryConferenceRepository} from "../../../adapters/in-memory-conferen
 import {OrganizeConference} from "../../../usecases/organize-conference";
 import {RequestHandler} from "express";
 import {User} from "../../../entities/user.entity";
+import {CreateConferenceInput} from "../../../infrastructure/express_api/dto/conference.dto";
+import {ValidateRequest} from "../../../infrastructure/express_api/utils/validate-request";
 
 const idGenerator = new RandomIdGenerator()
 const currentDateGenerator = new CurrentDateGenerator()
@@ -13,13 +15,21 @@ const useCase = new OrganizeConference(repository, idGenerator, currentDateGener
 
 export const createConference: RequestHandler = async (req, res, next) => {
     try {
-        const {title, startDate, endDate, seats} = req.body;
+        const body = req.body;
+
+        const {errors, input} = await ValidateRequest(CreateConferenceInput, body)
+
+        if (errors) {
+            return res.status(400).json({errors});
+        }
+
+
         const result = await useCase.execute({
             user: new User({id: 'john-doe'}),
-            title,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            seats
+            title: input.title,
+            startDate: new Date(input.startDate),
+            endDate: new Date(input.endDate),
+            seats: input.seats
         });
 
         res.status(201).json(result);
