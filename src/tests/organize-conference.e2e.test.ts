@@ -1,39 +1,55 @@
 import request from "supertest";
-import app from "../infrastructure/express_api/app";
+
 import {addDays, addHours} from "date-fns";
-import {User} from "../user/entities/user.entity";
-import {InMemoryUserRepository} from "../user/adapters/in-memory-user-repository";
 import container from "../infrastructure/express_api/config/dependecy-injection";
+import {IConferenceRepository} from "../conferences/ports/conference-repository.inteface";
+import {TestApp} from "../tests/utils/test-app";
+import {Application} from "express";
+import {e2eUsers} from "../tests/seeds/user-seeds";
 
 describe('Feature: Organize Conference', () => {
-    const johndoe = new User({
-        id: 'john-doe',
-        emailAdress: 'johndoe@gmail.com',
-        password: 'azerty'
-    })
 
-    let repository: InMemoryUserRepository
+
+    let testApp: TestApp
+    let app: Application
 
     beforeEach(async () => {
-        repository = container.resolve('userRepository')
-        await repository.create(johndoe)
+        testApp = new TestApp()
+        await testApp.setup()
+        await testApp.loadAllFixtures([e2eUsers.johnDoe])
+        app = testApp.expressApp
+
     })
 
     it('should organize a conference', async () => {
-
+        const startDate = addDays(new Date(), 4)
+        const endDate = addHours(addDays(new Date(), 4), 1)
 
         const result = await request(app).post('/conference')
-            .set('Authorization', 'Basic am9obmRvZUBnbWFpbC5jb206YXplcnR5')
+            .set('Authorization', e2eUsers.johnDoe.createAuthorizationToken())
             .send({
                 title: 'My first conference',
-                startDate: addDays(new Date(), 4).toISOString(),
-                endDate: addHours(addDays(new Date(), 4), 1).toISOString(),
+                startDate: startDate,
+                endDate: endDate,
                 seats: 100
             })
-        console.log(result)
+
         expect(result.status).toBe(201)
         expect(result.body.data).toEqual({
             id: expect.any(String),
+        })
+
+        const conferenceRepository = container.resolve('conferenceRepository') as IConferenceRepository
+        const fetchedConference = await conferenceRepository.findById(result.body.data.id)
+
+        expect(fetchedConference).toBeDefined()
+        expect(fetchedConference?.props).toEqual({
+            id: result.body.data.id,
+            organizerId: e2eUsers.johnDoe.entity.props.id,
+            title: 'My first conference',
+            startDate: startDate,
+            endDate: endDate,
+            seats: 100
         })
     })
 })

@@ -5,6 +5,7 @@ import {CurrentDateGenerator} from "../../../core/adapters/current-date-generato
 import {InMemoryUserRepository} from "../../../user/adapters/in-memory-user-repository";
 import {OrganizeConference} from "../../../conferences/usecases/organize-conference";
 import {BasicAuthenticator} from "../../../user/services/basic-authenticator";
+import {ChangeSeats} from "../../../conferences/usecases/change-seats";
 
 const container = createContainer()
 
@@ -24,6 +25,7 @@ container.register({
     organizeConferenceUseCase: asValue(
         new OrganizeConference(conferenceRepository, idGenerator, dateProvider)
     ),
+    changeSeatsUseCase: asValue(new ChangeSeats(conferenceRepository)),
     authenticator: asValue(new BasicAuthenticator(userRepository))
 
 })
