@@ -29,6 +29,10 @@ describe('Feature: change number of seats', () => {
     let useCase: ChangeSeats;
     let repository: InMemoryConferenceRepository
 
+    async function expectSeatsUnchanged() {
+        const fetchedConference = await repository.findById(conference.props.id);
+        expect(fetchedConference!.props.seats).toBe(100);
+    }
 
     beforeEach(async () => {
         repository = new InMemoryConferenceRepository();
@@ -58,6 +62,8 @@ describe('Feature: change number of seats', () => {
                 conferenceId: 'unknown-id',
                 seats: 100
             })).rejects.toThrow('Conference not found')
+
+            await expectSeatsUnchanged();
         })
     })
 
@@ -66,8 +72,34 @@ describe('Feature: change number of seats', () => {
             await expect(useCase.execute({
                 user: johnTheDow,
                 conferenceId: conference.props.id,
-                seats: 100
+                seats: 50
             })).rejects.toThrow('Not allowed to update this conference')
+
+            await expectSeatsUnchanged();
+        })
+    })
+
+    describe('Scenario: number of seats <= 20', () => {
+        it('Schould fail', async () => {
+            await expect(useCase.execute({
+                user: johnDoe,
+                conferenceId: conference.props.id,
+                seats: 15
+            })).rejects.toThrow('Conference must have at least 20 seats and at most 1000 seats')
+
+            await expectSeatsUnchanged();
+        })
+    })
+
+    describe('Scenario: number of seats >= 1000', () => {
+        it('Schould fail', async () => {
+            await expect(useCase.execute({
+                user: johnDoe,
+                conferenceId: conference.props.id,
+                seats: 1001
+            })).rejects.toThrow('Conference must have at least 20 seats and at most 1000 seats')
+
+            await expectSeatsUnchanged();
         })
     })
 

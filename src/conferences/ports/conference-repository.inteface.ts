@@ -6,4 +6,7 @@ export interface IConferenceRepository {
     get(): Promise<Conference[]>
 
     findById(id: string): Promise<Conference | null>
+
+    update(conference: Conference): Promise<void>
+    
 }

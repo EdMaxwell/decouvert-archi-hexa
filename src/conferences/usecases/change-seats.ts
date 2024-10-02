@@ -21,6 +21,13 @@ export class ChangeSeats {
         if (conference.props.organizerId !== user.props.id) {
             throw new Error('Not allowed to update this conference');
         }
+
         conference.update({seats});
+
+        if (conference.asNotEnoughSeats() || conference.asTooManySeats()) {
+            throw new Error('Conference must have at least 20 seats and at most 1000 seats');
+        }
+
+        await this.repository.update(conference);
     }
 }
