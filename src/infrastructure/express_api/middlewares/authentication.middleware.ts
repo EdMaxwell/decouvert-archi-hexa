@@ -1,10 +1,7 @@
-import {BasicAuthenticator} from "../../../user/services/basic-authenticator";
-import {InMemoryUserRepository} from "../../../user/adapters/in-memory-user-repository";
 import {NextFunction, Request, Response} from 'express'
 import {extractToken} from "../../../infrastructure/express_api/utils/extract-token";
+import container from "../../../infrastructure/express_api/config/dependecy-injection";
 
-const userRepository = new InMemoryUserRepository()
-const authenticator = new BasicAuthenticator(userRepository)
 
 declare module 'express-serve-static-core' {
     interface Request {
@@ -24,7 +21,8 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
             return res.jsonError('Unauthorized', 403)
         }
 
-        req.user = await authenticator.authenticate(token)
+        req.user = await container.resolve('authenticator').authenticate(token)
+        next()
     } catch (error) {
         next(error)
     }

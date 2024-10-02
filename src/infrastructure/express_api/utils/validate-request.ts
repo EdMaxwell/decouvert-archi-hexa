@@ -1,5 +1,5 @@
 import {validate, ValidationError} from "class-validator";
-import {ClassConstructor, plainToInstance} from "class-transformer";
+import {ClassConstructor, plainToClass} from "class-transformer";
 
 const validationError = async (input: any): Promise<ValidationError[] | false> => {
     const errors = await validate(input, {validationError: {target: true}});
@@ -15,7 +15,7 @@ export const ValidateRequest = async <T>(type: ClassConstructor<T>, body: any): 
     errors: boolean | string,
     input: T
 }> => {
-    const input = plainToInstance(type, body);
+    const input = plainToClass(type, body);
     const errors = await validationError(input);
 
     if (errors) {

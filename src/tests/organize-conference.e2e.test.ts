@@ -3,7 +3,7 @@ import app from "../infrastructure/express_api/app";
 import {addDays, addHours} from "date-fns";
 import {User} from "../user/entities/user.entity";
 import {InMemoryUserRepository} from "../user/adapters/in-memory-user-repository";
-import {BasicAuthenticator} from "../user/services/basic-authenticator";
+import container from "../infrastructure/express_api/config/dependecy-injection";
 
 describe('Feature: Organize Conference', () => {
     const johndoe = new User({
@@ -15,13 +15,13 @@ describe('Feature: Organize Conference', () => {
     let repository: InMemoryUserRepository
 
     beforeEach(async () => {
-        repository = new InMemoryUserRepository()
+        repository = container.resolve('userRepository')
         await repository.create(johndoe)
     })
 
     it('should organize a conference', async () => {
 
-        jest.spyOn(BasicAuthenticator.prototype, 'authenticate').mockResolvedValue(johndoe)
+
         const result = await request(app).post('/conference')
             .set('Authorization', 'Basic am9obmRvZUBnbWFpbC5jb206YXplcnR5')
             .send({
@@ -29,9 +29,10 @@ describe('Feature: Organize Conference', () => {
                 startDate: addDays(new Date(), 4).toISOString(),
                 endDate: addHours(addDays(new Date(), 4), 1).toISOString(),
                 seats: 100
-            }).expect(201)
-
-        expect(result.body).toEqual({
+            })
+        console.log(result)
+        expect(result.status).toBe(201)
+        expect(result.body.data).toEqual({
             id: expect.any(String),
         })
     })

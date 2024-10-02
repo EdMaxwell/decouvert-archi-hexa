@@ -1,41 +1,34 @@
-import {RandomIdGenerator} from "../../../core/adapters/random-id-generator";
-import {CurrentDateGenerator} from "../../../core/adapters/current-date-generator";
-import {InMemoryConferenceRepository} from "../../../conferences/adapters/in-memory-conference-repository";
-import {OrganizeConference} from "../../../conferences/usecases/organize-conference";
 import {RequestHandler} from "express";
 import {User} from "../../../user/entities/user.entity";
 import {CreateConferenceInput} from "../../../infrastructure/express_api/dto/conference.dto";
 import {ValidateRequest} from "../../../infrastructure/express_api/utils/validate-request";
-
-const idGenerator = new RandomIdGenerator()
-const currentDateGenerator = new CurrentDateGenerator()
-const repository = new InMemoryConferenceRepository()
-const useCase = new OrganizeConference(repository, idGenerator, currentDateGenerator)
+import {AwilixContainer} from "awilix";
 
 
-export const createConference: RequestHandler = async (req, res, next) => {
-    try {
-        const body = req.body;
+// After
+export const createConference = (container: AwilixContainer): RequestHandler => {
+    return async (req, res, next) => {
+        try {
+            const body = req.body;
+            const {errors, input} = await ValidateRequest(CreateConferenceInput, body)
 
-        const {errors, input} = await ValidateRequest(CreateConferenceInput, body)
+            if (errors) {
+                return res.status(400).json({errors});
+            }
 
-        if (errors) {
-            return res.status(400).json({errors});
+            const result = await container.resolve('organizeConferenceUseCase').execute({
+                user: req.user as User,
+                title: input.title,
+                startDate: new Date(input.startDate),
+                endDate: new Date(input.endDate),
+                seats: input.seats
+            });
+
+            res.jsonSuccess({id: result.id}, 201);
+        } catch (err) {
+            next(err);
         }
-
-
-        const result = await useCase.execute({
-            user: req.user as User,
-            title: input.title,
-            startDate: new Date(input.startDate),
-            endDate: new Date(input.endDate),
-            seats: input.seats
-        });
-
-        res.jsonSuccess({id: result.id}, 201);
-    } catch (err) {
-        next(err);
-    }
+    };
 };
 
 
