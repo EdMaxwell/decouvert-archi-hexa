@@ -51,7 +51,7 @@ describe('Feature: change number of seats', () => {
                 user: testUsers.johnTheDow,
                 conferenceId: testConference.conference1.props.id,
                 seats: 50
-            })).rejects.toThrow('Not allowed to update this conference')
+            })).rejects.toThrow('User is not the organizer of the conference')
 
             await expectSeatsUnchanged();
         })

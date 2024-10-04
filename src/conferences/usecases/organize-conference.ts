@@ -1,13 +1,25 @@
 import {IConferenceRepository} from "../ports/conference-repository.inteface";
 import Conference from "../entities/conference.entity";
-
 import {User} from "../../user/entities/user.entity";
 import {IIdGeneratorInterface} from "../../core/ports/id-generator.interface";
 import {IDateGeneratorInterface} from "../../core/ports/date-generator.interface";
+import {IExecutable} from "../../core/executable.interface";
+import {DomainException} from "../../core/exceptions/domain-exception";
+
+type RequestOrganizeConference = {
+    user: User;
+    title: string;
+    startDate: Date;
+    endDate: Date;
+    seats: number;
+}
+
+type ResponseOrganizeConference = {
+    id: string;
+}
 
 
-export class OrganizeConference {
-
+export class OrganizeConference implements IExecutable<RequestOrganizeConference, ResponseOrganizeConference> {
 
     constructor(
         private readonly repository: IConferenceRepository,
@@ -16,32 +28,38 @@ export class OrganizeConference {
     ) {
     }
 
-    async execute(data: { user: User, title: string, startDate: Date, endDate: Date, seats: number }) {
+    async execute({
+                      user,
+                      title,
+                      startDate,
+                      endDate,
+                      seats
+                  }) {
         const id = this.idGenerator.generate();
         const conference = new Conference({
             id,
-            organizerId: data.user.props.id,
-            title: data.title,
-            startDate: data.startDate,
-            endDate: data.endDate,
-            seats: data.seats
+            organizerId: user.props.id,
+            title: title,
+            startDate: startDate,
+            endDate: endDate,
+            seats: seats
         })
 
 
         if (conference.isTooClose(this.dateGenerator.generate())) {
-            throw new Error('Conference must be organized at least 3 days in advance');
+            throw new DomainException('Conference must be organized at least 3 days in advance');
         }
 
         if (conference.asTooManySeats()) {
-            throw new Error('Conference must have less than 1000 seats');
+            throw new DomainException('Conference must have less than 1000 seats');
         }
 
         if (conference.asNotEnoughSeats()) {
-            throw new Error('Conference must have at least 20 seats');
+            throw new DomainException('Conference must have at least 20 seats');
         }
 
         if (conference.isTooLong()) {
-            throw new Error('Conference must be less than 3 hours long');
+            throw new DomainException('Conference must be less than 3 hours long');
         }
 
         await this.repository.create(conference);

@@ -1,4 +1,5 @@
 import {differenceInDays, differenceInHours} from "date-fns";
+import {Entity} from "../../core/entities/entity";
 
 type ConferenceProps = {
     id: string;
@@ -10,15 +11,7 @@ type ConferenceProps = {
 };
 
 
-export default class Conference {
-    public initialState: ConferenceProps;
-    public props: ConferenceProps;
-
-    constructor(data: ConferenceProps) {
-        this.initialState = {...data};
-        this.props = {...data};
-        Object.freeze(this.initialState);
-    }
+export default class Conference extends Entity<ConferenceProps> {
 
 
     isTooClose(now: Date): boolean {
@@ -37,12 +30,5 @@ export default class Conference {
         return differenceInHours(this.props.endDate, this.props.startDate) > 3;
     }
 
-    update(data: Partial<ConferenceProps>) {
-        this.props = {...this.props, ...data};
-    }
 
-    commit() {
-        this.initialState = {...this.props};
-        
-    }
 }

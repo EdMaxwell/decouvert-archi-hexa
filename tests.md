@@ -9,14 +9,14 @@
     - [X] Change the number of seats
     - [X] The conference must exist
     - [X] The user must be the organizer
-    - [ ] The seats must be between 20 and 1000
+    - [X] The seats must be between 20 and 1000
 
-- [ ] Usecase: Change the dates of a conference
-    - [ ] Change the dates
-    - [ ] The conference must exist
-    - [ ] The user must be the organizer
-    - [ ] The conference must happen in at least 3 days
-    - [ ] The duration must be less than 3 hours
+- [X] Usecase: Change the dates of a conference
+    - [X] Change the dates
+    - [X] The conference must exist
+    - [X] The user must be the organizer
+    - [X] The conference must happen in at least 3 days
+    - [X] The duration must be less than 3 hours
 
 - [ ] Usecase: Cancel a conference
     - [ ] The conference must exist

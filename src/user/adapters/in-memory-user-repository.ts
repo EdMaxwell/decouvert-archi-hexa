@@ -1,6 +1,8 @@
 import {User} from "../entities/user.entity";
+import {IUserRepository} from "../../user/ports/user-repository.interface";
+import {Promise} from "mongoose";
 
-export class InMemoryUserRepository {
+export class InMemoryUserRepository implements IUserRepository {
     private users: User[] = []
 
     async create(user: User): Promise<void> {
@@ -11,4 +13,10 @@ export class InMemoryUserRepository {
         const user = this.users.find(user => user.props.emailAdress === email)
         return user ?? null
     }
+
+    async findById(id: string): Promise<User | null> {
+        const user = this.users.find(user => user.props.id === id)
+        return user ?? null
+    }
+
 }
