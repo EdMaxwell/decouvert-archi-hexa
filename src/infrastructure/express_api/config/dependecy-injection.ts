@@ -36,7 +36,7 @@ container.register({
     organizeConferenceUseCase: asValue(
         new OrganizeConference(conferenceRepository, idGenerator, dateProvider)
     ),
-    changeSeatsUseCase: asValue(new ChangeSeats(conferenceRepository)),
+    changeSeatsUseCase: asValue(new ChangeSeats(conferenceRepository, bookingRepository)),
     authenticator: asValue(new BasicAuthenticator(userRepository)),
     userRepository: asValue(new MongoUserRepository(MongoUser.UserModel)),
     changeDatesUseCase: asValue(new ChangeDates(conferenceRepository, dateProvider, bookingRepository, mailer, userRepository)),

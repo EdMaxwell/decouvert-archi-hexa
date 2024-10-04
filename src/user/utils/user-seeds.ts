@@ -13,6 +13,12 @@ export const testUsers = {
         password: 'password123'
     }),
 
+    bobTheDow: new User({
+        id: 'bob-thedow',
+        emailAdress: 'bobthedow@example.com',
+        password: 'password123'
+    }),
+
     janeTheDow: new User({
         id: 'jane-thedow',
         emailAdress: 'janethedow@example.com',

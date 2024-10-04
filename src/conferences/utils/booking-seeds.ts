@@ -154,4 +154,105 @@ export const testBooking = {
         userId: testUsers.user35.props.id,
         conferenceId: testConference.conference1.props.id
     }),
+    user1Conference2Booking: new Booking({
+        userId: testUsers.user1.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user2Conference2Booking: new Booking({
+        userId: testUsers.user2.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user3Conference2Booking: new Booking({
+        userId: testUsers.user3.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user4Conference2Booking: new Booking({
+        userId: testUsers.user4.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user5Conference2Booking: new Booking({
+        userId: testUsers.user5.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user6Conference2Booking: new Booking({
+        userId: testUsers.user6.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user7Conference2Booking: new Booking({
+        userId: testUsers.user7.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user8Conference2Booking: new Booking({
+        userId: testUsers.user8.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user9Conference2Booking: new Booking({
+        userId: testUsers.user9.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user10Conference2Booking: new Booking({
+        userId: testUsers.user10.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user11Conference2Booking: new Booking({
+        userId: testUsers.user11.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user12Conference2Booking: new Booking({
+        userId: testUsers.user12.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user13Conference2Booking: new Booking({
+        userId: testUsers.user13.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user14Conference2Booking: new Booking({
+        userId: testUsers.user14.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user15Conference2Booking: new Booking({
+        userId: testUsers.user15.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user16Conference2Booking: new Booking({
+        userId: testUsers.user16.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user17Conference2Booking: new Booking({
+        userId: testUsers.user17.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user18Conference2Booking: new Booking({
+        userId: testUsers.user18.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user19Conference2Booking: new Booking({
+        userId: testUsers.user19.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user20Conference2Booking: new Booking({
+        userId: testUsers.user20.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user21Conference2Booking: new Booking({
+        userId: testUsers.user21.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user22Conference2Booking: new Booking({
+        userId: testUsers.user22.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user23Conference2Booking: new Booking({
+        userId: testUsers.user23.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user24Conference2Booking: new Booking({
+        userId: testUsers.user24.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+    user25Conference2Booking: new Booking({
+        userId: testUsers.user25.props.id,
+        conferenceId: testConference.conference2.props.id
+    }),
+
 };

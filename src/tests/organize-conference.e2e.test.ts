@@ -50,8 +50,8 @@ describe('Feature: Organize Conference', () => {
                 id: result.body.data.id,
                 organizerId: e2eUsers.johnDoe.entity.props.id,
                 title: 'My first conference',
-                startDate: startDate.toISOString(),
-                endDate: endDate.toISOString(),
+                startDate: startDate,
+                endDate: endDate,
                 seats: 100
             })
         })
@@ -66,8 +66,8 @@ describe('Feature: Organize Conference', () => {
             const result = await request(app).post('/conference')
                 .send({
                     title: 'My first conference',
-                    startDate: startDate,
-                    endDate: endDate,
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString(),
                     seats: 100
                 })
 

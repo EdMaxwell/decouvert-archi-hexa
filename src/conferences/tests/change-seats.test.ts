@@ -1,9 +1,9 @@
-import {ChangeSeats} from "../../conferences/usecases/change-seats";
-import {InMemoryConferenceRepository} from "../../conferences/adapters/in-memory-conference-repository";
-import {testConference} from "../../conferences/utils/conference-seeds";
+import {ChangeSeats} from "../usecases/change-seats";
+import {InMemoryConferenceRepository} from "../adapters/in-memory-conference-repository";
+import {testConference} from "../utils/conference-seeds";
 import {testUsers} from "../../user/utils/user-seeds";
-import {InMemoryBookingRepository} from "../../conferences/adapters/in-memory-booking-repository";
-import {testBooking} from "../../conferences/utils/booking-seeds";
+import {InMemoryBookingRepository} from "../adapters/in-memory-booking-repository";
+import {testBooking} from "../utils/booking-seeds";
 
 describe('Feature: change number of seats', () => {
     let useCase: ChangeSeats;

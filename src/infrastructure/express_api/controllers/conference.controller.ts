@@ -23,8 +23,8 @@ export const createConference = (container: AwilixContainer): RequestHandler => 
             const result = await container.resolve('organizeConferenceUseCase').execute({
                 user: req.user as User,
                 title: input.title,
-                startDate: input.startDate,
-                endDate: input.endDate,
+                startDate: new Date(input.startDate),
+                endDate: new Date(input.endDate),
                 seats: input.seats
             });
 
@@ -73,8 +73,8 @@ export const updateConferenceDate = (container: AwilixContainer): RequestHandler
 
             const result = await container.resolve('changeDatesUseCase').execute({
                 conferenceId: id,
-                startDate: input.startDate,
-                endDate: input.endDate,
+                startDate: new Date(input.startDate),
+                endDate: new Date(input.endDate),
                 user: req.user as User
             });
 

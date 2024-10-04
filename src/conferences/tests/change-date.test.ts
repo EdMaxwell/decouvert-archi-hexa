@@ -1,13 +1,13 @@
 import {addDays, addHours} from "date-fns";
 import {testUsers} from "../../user/utils/user-seeds";
-import {testConference} from "../../conferences/utils/conference-seeds";
-import {InMemoryConferenceRepository} from "../../conferences/adapters/in-memory-conference-repository";
-import {ChangeDates} from "../../conferences/usecases/change-date";
+import {testConference} from "../utils/conference-seeds";
+import {InMemoryConferenceRepository} from "../adapters/in-memory-conference-repository";
+import {ChangeDates} from "../usecases/change-date";
 import {CurrentDateGenerator} from "../../core/adapters/current-date-generator";
-import {InMemoryBookingRepository} from "../../conferences/adapters/in-memory-booking-repository";
+import {InMemoryBookingRepository} from "../adapters/in-memory-booking-repository";
 import {InMemoryMailer} from "../../core/adapters/in-memory-mailer";
 import {InMemoryUserRepository} from "../../user/adapters/in-memory-user-repository";
-import {testBooking} from "../../conferences/utils/booking-seeds";
+import {testBooking} from "../utils/booking-seeds";
 
 describe('Feature: Change date of a conference', () => {
     function expectDateRemainUnchanged(conference) {
