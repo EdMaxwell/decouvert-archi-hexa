@@ -30,5 +30,7 @@ export default class Conference extends Entity<ConferenceProps> {
         return differenceInHours(this.props.endDate, this.props.startDate) > 3;
     }
 
-
+    isFull(currentBookingsCount: number): boolean {
+        return currentBookingsCount >= this.props.seats;
+    }
 }

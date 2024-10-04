@@ -19,12 +19,14 @@
     - [X] The conference must happen in at least 3 days
     - [X] The duration must be less than 3 hours
 
-- [ ] Usecase: Book a seat
-    - [ ] The conference must exist
-    - [ ] The conference must have enough seats
-    - [ ] The user must not have already booked a seat
-    - [ ] The user must not be the organizer
-    - [ ] The conference must not have already started
+- [X] Usecase: Book a seat
+    - [X] The conference must exist
+    - [X] The conference must have enough seats
+    - [X] The user must not have already booked a seat
+    - [X] The user must not be the organizer
+    - [X] The conference must not have already started
+    - [ ] An email must be sent to the user
+    - [ ] An email must be sent to the organizer
 
 - [ ] Usecase: Cancel a conference
     - [ ] The conference must exist

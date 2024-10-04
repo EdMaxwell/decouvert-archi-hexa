@@ -30,12 +30,11 @@ export class ChangeSeats implements IExecutable<RequestChangeSeats, ResponseChan
 
         if (conference.props.organizerId !== user.props.id) throw new ConferenceUpdateForbiddenException()
 
-        if (bookings.length >= seats) throw new SeatsBelowCurrentBookingsException()
 
         conference.update({seats});
 
         if (conference.asNotEnoughSeats() || conference.asTooManySeats()) throw new ConferenceBetween20And1000SeatsException()
-
+        if (bookings.length >= seats) throw new SeatsBelowCurrentBookingsException()
         await this.repository.update(conference);
     }
 }

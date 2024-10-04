@@ -23,8 +23,8 @@ export const createConference = (container: AwilixContainer): RequestHandler => 
             const result = await container.resolve('organizeConferenceUseCase').execute({
                 user: req.user as User,
                 title: input.title,
-                startDate: input.startDate,
-                endDate: input.endDate,
+                startDate: new Date(input.startDate),
+                endDate: new Date(input.endDate),
                 seats: input.seats
             });
 
@@ -73,8 +73,8 @@ export const updateConferenceDate = (container: AwilixContainer): RequestHandler
 
             const result = await container.resolve('changeDatesUseCase').execute({
                 conferenceId: id,
-                startDate: input.startDate,
-                endDate: input.endDate,
+                startDate: new Date(input.startDate),
+                endDate: new Date(input.endDate),
                 user: req.user as User
             });
 
@@ -85,3 +85,18 @@ export const updateConferenceDate = (container: AwilixContainer): RequestHandler
     };
 }
 
+export const bookASeat = (container: AwilixContainer): RequestHandler => {
+    return async (req, res, next) => {
+        try {
+            const {id} = req.params;
+            const result = await container.resolve('bookSeatUseCase').execute({
+                conferenceId: id,
+                user: req.user as User
+            });
+
+            res.jsonSuccess(result, 201); // Change status code to 200
+        } catch (err) {
+            next(err);
+        }
+    };
+}

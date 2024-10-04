@@ -13,6 +13,7 @@ import {InMemoryMailer} from "../../../core/adapters/in-memory-mailer";
 import {InMemoryBookingRepository} from "../../../conferences/adapters/in-memory-booking-repository";
 import {IBookingRepository} from "../../../conferences/ports/booking-repository.interface";
 import {IMailer} from "../../../core/ports/mailer.interface";
+import {BookSeat} from "../../../conferences/usecases/book-seat";
 
 const container = createContainer()
 
@@ -36,10 +37,11 @@ container.register({
     organizeConferenceUseCase: asValue(
         new OrganizeConference(conferenceRepository, idGenerator, dateProvider)
     ),
-    changeSeatsUseCase: asValue(new ChangeSeats(conferenceRepository)),
+    changeSeatsUseCase: asValue(new ChangeSeats(conferenceRepository, bookingRepository)),
     authenticator: asValue(new BasicAuthenticator(userRepository)),
     userRepository: asValue(new MongoUserRepository(MongoUser.UserModel)),
     changeDatesUseCase: asValue(new ChangeDates(conferenceRepository, dateProvider, bookingRepository, mailer, userRepository)),
+    bookSeatUseCase: asValue(new BookSeat(conferenceRepository, bookingRepository, userRepository, mailer, idGenerator))
 })
 
 export default container

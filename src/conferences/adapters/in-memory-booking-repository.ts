@@ -18,4 +18,9 @@ export class InMemoryBookingRepository implements IBookingRepository {
             await this.create(booking);
         }
     }
+
+    async findById(id: string): Promise<Booking | null> {
+        const booking = this.data.find(booking => booking.props.id === id);
+        return booking ? booking : null;
+    }
 }

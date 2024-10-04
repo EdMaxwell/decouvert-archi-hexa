@@ -1,4 +1,4 @@
-import {OrganizeConference} from "./organize-conference";
+import {OrganizeConference} from "../usecases/organize-conference";
 import {InMemoryConferenceRepository} from "../adapters/in-memory-conference-repository";
 import {FixedIdGenerator} from "../../core/adapters/fixed-id-generator";
 import Conference from "../entities/conference.entity";

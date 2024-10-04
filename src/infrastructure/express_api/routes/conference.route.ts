@@ -1,5 +1,6 @@
 import express from "express";
 import {
+    bookASeat,
     createConference,
     updateConferenceDate,
     updateConferenceSeats
@@ -13,5 +14,6 @@ router.use(isAuthenticated)
 router.post('/conference', createConference(container))
 router.patch('/conference/:id/seats', updateConferenceSeats(container))
 router.patch('/conference/:id/date', updateConferenceDate(container))
+router.post('/conference/:id/book', bookASeat(container))
 
 export default router;

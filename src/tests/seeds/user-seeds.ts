@@ -20,6 +20,13 @@ export const e2eUsers = {
         password: 'azerty'
     })),
 
+    bobTheDow: new UserFixture(new User({
+        id: 'bob-thedow',
+        emailAdress: 'bobthedow@gmail.com',
+        password: 'azerty'
+
+    })),
+
     // Nouveaux utilisateurs
     user1: new UserFixture(new User({
         id: 'user1',
