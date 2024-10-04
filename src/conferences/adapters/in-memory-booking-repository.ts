@@ -13,4 +13,9 @@ export class InMemoryBookingRepository implements IBookingRepository {
         return this.data.filter(booking => booking.props.conferenceId === conferenceId);
     }
 
+    async createAll(bookings: Booking[]) {
+        for (const booking of bookings) {
+            await this.create(booking);
+        }
+    }
 }

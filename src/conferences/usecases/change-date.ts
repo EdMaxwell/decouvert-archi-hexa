@@ -31,6 +31,7 @@ export class ChangeDates implements IExecutable<RequestChangeDate, ResponseChang
 
     async execute({user, conferenceId, startDate, endDate}) {
         const conference = await this.repository.findById(conferenceId);
+
         if (!conference) throw new ConferenceNotFoundException()
         if (conference.props.organizerId !== user.props.id) throw new ConferenceUpdateForbiddenException()
 

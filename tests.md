@@ -10,6 +10,7 @@
     - [X] The conference must exist
     - [X] The user must be the organizer
     - [X] The seats must be between 20 and 1000
+    - [X] The seats must be greater than the number of bookings
 
 - [X] Usecase: Change the dates of a conference
     - [X] Change the dates
@@ -18,6 +19,23 @@
     - [X] The conference must happen in at least 3 days
     - [X] The duration must be less than 3 hours
 
+- [ ] Usecase: Book a seat
+    - [ ] The conference must exist
+    - [ ] The conference must have enough seats
+    - [ ] The user must not have already booked a seat
+    - [ ] The user must not be the organizer
+    - [ ] The conference must not have already started
+
 - [ ] Usecase: Cancel a conference
     - [ ] The conference must exist
     - [ ] The user must be the organizer
+
+- [ ] Evaluation:
+    - [X] Finir le test `change-seats.test.ts`: Pas moins de sieges que ceux qui sont deja reserves (50 places - 30
+      bookings - pas possible de mettre 25 places)
+    - [ ] Faire le usecase `Reserver sa place` et le test unitaires et e2e qui va avec
+    - [ ] Tests d'integration pour `mongo-conference-repository`
+
+    - [ ] Extra si vous avez du temps:
+        - [ ] Mettre en place l'adapter `Jwt-authenticator`
+        - [ ] Faire usecase `Annuler Conference` (Attention aux consequences que ca implique sur les reservations)
