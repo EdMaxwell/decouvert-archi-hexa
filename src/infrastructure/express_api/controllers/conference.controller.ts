@@ -85,3 +85,18 @@ export const updateConferenceDate = (container: AwilixContainer): RequestHandler
     };
 }
 
+export const bookASeat = (container: AwilixContainer): RequestHandler => {
+    return async (req, res, next) => {
+        try {
+            const {id} = req.params;
+            const result = await container.resolve('bookSeatUseCase').execute({
+                conferenceId: id,
+                user: req.user as User
+            });
+
+            res.jsonSuccess(result, 201); // Change status code to 200
+        } catch (err) {
+            next(err);
+        }
+    };
+}

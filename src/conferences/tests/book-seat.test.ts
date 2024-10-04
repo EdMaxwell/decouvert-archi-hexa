@@ -4,11 +4,17 @@ import {testBooking} from "../../conferences/utils/booking-seeds";
 import {testConference} from "../../conferences/utils/conference-seeds";
 import {testUsers} from "../../user/utils/user-seeds";
 import {BookSeat} from "../../conferences/usecases/book-seat";
+import {InMemoryMailer} from "../../core/adapters/in-memory-mailer";
+import {InMemoryUserRepository} from "../../user/adapters/in-memory-user-repository";
+import {RandomIdGenerator} from "../../core/adapters/random-id-generator";
 
 describe('Feature: Book a seat', () => {
     let useCase: BookSeat;
     let repository: InMemoryConferenceRepository
     let bookingsRepository: InMemoryBookingRepository
+    let mailer: InMemoryMailer
+    let idGenerator: RandomIdGenerator
+    let userRepository: InMemoryUserRepository
 
     const bookingsFortestConference1 = [
         // Bookings pour conference1
@@ -86,14 +92,21 @@ describe('Feature: Book a seat', () => {
     beforeEach(async () => {
         repository = new InMemoryConferenceRepository();
         bookingsRepository = new InMemoryBookingRepository();
+        mailer = new InMemoryMailer();
+        userRepository = new InMemoryUserRepository();
+        idGenerator = new RandomIdGenerator();
 
+        await userRepository.create(testUsers.johnDoe);
+        await userRepository.create(testUsers.bobTheDow);
+        await userRepository.create(testUsers.johnTheDow);
+        await userRepository.create(testUsers.janeTheDow);
         await repository.create(testConference.conference1);
         await repository.create(testConference.conference2);
         await repository.create(testConference.conferenceAlreadyStarted);
         await bookingsRepository.createAll(bookingsFortestConference1);
         await bookingsRepository.createAll(bookingsFortestConference2);
 
-        useCase = new BookSeat(repository, bookingsRepository);
+        useCase = new BookSeat(repository, bookingsRepository, userRepository, mailer, idGenerator);
     })
 
 
@@ -109,6 +122,25 @@ describe('Feature: Book a seat', () => {
 
             expect(fetchedBookings.length).toBe(bookingsFortestConference1.length + 1);
         })
+
+        it('should send an email to the participants', async () => {
+            await useCase.execute(payload);
+            console.log(mailer.getSentEmails());
+            expect(mailer.getSentEmails()).toContainEqual({
+                from: 'TEDx conference',
+                to: testUsers.johnDoe.props.emailAdress,
+                subject: `${testConference.conference1.props.title} has a new participant`,
+                body: `The user ${testUsers.bobTheDow.props.emailAdress} has booked a seat in the conference ${testConference.conference1.props.title}`
+            });
+            expect(mailer.getSentEmails()).toContainEqual({
+                from: 'TEDx conference',
+                to: testUsers.bobTheDow.props.emailAdress,
+                subject: `You have booked a seat in ${testConference.conference1.props.title}`,
+                body: `You have booked a seat in the conference ${testConference.conference1.props.title}. The conference will start the ${testConference.conference1.props.startDate}`,
+            });
+        });
+
+
     })
 
     describe('Scenario: conference not exist', () => {

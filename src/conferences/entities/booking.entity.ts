@@ -1,6 +1,7 @@
 import {Entity} from "../../core/entities/entity";
 
 export interface BookingProps {
+    id: string;
     userId: string;
     conferenceId: string;
 

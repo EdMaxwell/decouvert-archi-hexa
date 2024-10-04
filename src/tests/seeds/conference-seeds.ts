@@ -10,7 +10,7 @@ export const e2eConferences = {
         title: 'My first conference',
         startDate: addDays(new Date(), 4),
         endDate: addDays(addHours(new Date(), 2), 4),
-        seats: 100
+        seats: 50
     }))
 
 }

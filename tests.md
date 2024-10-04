@@ -25,6 +25,8 @@
     - [X] The user must not have already booked a seat
     - [X] The user must not be the organizer
     - [X] The conference must not have already started
+    - [ ] An email must be sent to the user
+    - [ ] An email must be sent to the organizer
 
 - [ ] Usecase: Cancel a conference
     - [ ] The conference must exist
